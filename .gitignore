@@ -1,0 +1,7 @@
+data
+tuner_results
+logs
+best*
+__pycache__
+models/__pycache__
+models/layers/__pycache__
