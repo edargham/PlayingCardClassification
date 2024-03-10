@@ -1,5 +1,5 @@
 data
-tuner_results
+tuning_results
 logs
 best*
 __pycache__

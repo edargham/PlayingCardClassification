@@ -44,3 +44,5 @@ class ResidualConvBlock(layers.Layer):
       x = l(x)
     residual = self.residual_conv(x)
     x = self.adder([x, residual])
+
+    return x
