@@ -7,15 +7,15 @@ from models.cnn_model import build_model, CNNModel
 
 def run_tuning():
   def build_hypermodel(hp: HyperParameters)->CNNModel:
-    num_layers_per_block = hp.Choice('num_layers_per_block', [1, 3, 5])
+    num_layers_per_block = config['num_layers_in_block'] #hp.Int('num_layers_per_block', min_value=1, max_value=5, step=2)
     separable = hp.Boolean('separable')
-    learning_rate = hp.Float('learning_rate', min_value=1e-3, max_value=1e-2, step=2e-3)
-    dropout_rate = hp.Float('dropout_rate', min_value=0.0, max_value=0.5, step=0.1)
+    learning_rate = hp.Float('learning_rate', min_value=1e-4, max_value=5e-4, step=5e-5)
+    dropout_rate = config['dropout_rate'] #hp.Float('dropout_rate', min_value=0.0, max_value=0.5, step=0.1)
 
     lr_schedule = optimizers.schedules.ExponentialDecay(
       initial_learning_rate=learning_rate,
-      decay_steps=1000,
-      decay_rate=0.9,
+      decay_steps=239,
+      decay_rate=1,
       staircase=True
     )
 

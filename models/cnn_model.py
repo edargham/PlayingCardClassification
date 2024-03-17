@@ -1,11 +1,14 @@
-from tensorflow.keras import layers, models, optimizers, losses, metrics
+import tensorflow as tf
+from keras import layers, models, optimizers, losses, metrics
 from models.layers.resnet_block import ResidualConvBlock
-
+from models.layers.locnet import LocNet
 from typing import List
 
 class CNNModel(models.Model):
   def __init__(
       self,
+      image_width: int,
+      image_height: int,
       filters_per_layer: List[int],
       kernel_sizes: List[tuple[int, int]],
       num_layers_in_block: int,
@@ -25,6 +28,11 @@ class CNNModel(models.Model):
         """
       )
 
+    self.spatial_transformation = LocNet(
+      image_width=image_width,
+      image_height=image_height
+    )
+
     self.conv_blocks = []
     for i in range(len(filters_per_layer)):
       self.conv_blocks += [
@@ -35,29 +43,41 @@ class CNNModel(models.Model):
           activation=conv_activation,
           separable=separable
         ),
-        layers.BatchNormalization(),
         layers.MaxPool2D(pool_size=(2, 2))
       ]
 
-    self.flatten = layers.Flatten()
+    self.lstm_blocks = [
+      layers.Dropout(dropout_rate),
+      layers.Dense(64, activation="relu", name="dense1"),
+      layers.Bidirectional(layers.LSTM(128, return_sequences=True, dropout=0.25)),
+      layers.Bidirectional(layers.LSTM(64, return_sequences=False, dropout=0.25))
+    ]
 
     self.dense_block = [
       layers.Dropout(dropout_rate),
-      layers.Dense(512, activation='relu'),
+      layers.Dense(128, activation='relu'),
       layers.Dropout(dropout_rate),
-      layers.Dense(256, activation='relu'),
-      layers.Dense(256, activation='relu'),
+      layers.Dense(64, activation='relu'),
+      layers.Dense(64, activation='relu'),
       layers.Dropout(dropout_rate),
       layers.Dense(num_classes, activation='softmax')
     ]
 
   def call(self, inputs, training=None, mask=None):
     x = inputs
+    x = self.spatial_transformation(x)
+    
     for l in self.conv_blocks:
       x = l(x)
-    x = self.flatten(x)
+
+    x = tf.reshape(x, (-1, tf.shape(x)[3], tf.shape(x)[1]*tf.shape(x)[2]))
+
+    for l in self.lstm_blocks:
+      x = l(x)
+
     for l in self.dense_block:
       x = l(x)
+
     return x
 
 def build_model(
@@ -75,6 +95,8 @@ def build_model(
     separable: bool=False
 ):
   model = CNNModel(
+    image_width=image_width,
+    image_height=image_height,
     filters_per_layer=filters,
     kernel_sizes=kernel_sizes,
     num_layers_in_block=num_layers_in_block,

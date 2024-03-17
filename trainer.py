@@ -1,4 +1,5 @@
-from tensorflow.keras import callbacks, optimizers, losses, metrics
+import tensorflow as tf
+from keras import callbacks, optimizers, losses, metrics
 from datetime import datetime
 from config import config
 from datagen_preprocessing import load_data
@@ -10,7 +11,7 @@ def run_training():
   tensorboard_callback = callbacks.TensorBoard(log_dir=logdir, histogram_freq=1)
   early_stop_callback = callbacks.EarlyStopping(
     monitor='val_loss',
-    patience=3,
+    patience=5,
     verbose=1,
     mode='min',
     restore_best_weights=True
@@ -30,10 +31,10 @@ def run_training():
     config['batch_size']
   )
 
-  lr_schedule = optimizers.schedules.ExponentialDecay(
+  lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate=config['learning_rate'],
-    decay_steps=1000,
-    decay_rate=0.9,
+    decay_steps=239,
+    decay_rate=1,
     staircase=True
   )
 

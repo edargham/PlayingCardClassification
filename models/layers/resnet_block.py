@@ -1,8 +1,8 @@
 import tensorflow as tf
-from tensorflow.keras import layers
+from keras import layers, models
 from models.layers.common import conv_layer
 
-class ResidualConvBlock(layers.Layer):
+class ResidualConvBlock(models.Model):
   def __init__(
     self,
     filters: int,
@@ -25,6 +25,8 @@ class ResidualConvBlock(layers.Layer):
           padding='same',
           separable=separable
         ),
+        layers.BatchNormalization(),
+        layers.LeakyReLU()
       ]
 
     self.residual_conv = conv_layer(

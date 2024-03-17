@@ -1,5 +1,5 @@
 import tensorflow as tf
-from tensorflow.keras import layers
+from keras import layers
 
 def conv_layer(
     filters:int,
@@ -14,7 +14,7 @@ def conv_layer(
       filters=filters,
       kernel_size=kernel_size,
       strides=strides,
-      activation=activation,
+      # activation=activation,
       padding=padding
     )
   else:
@@ -22,6 +22,6 @@ def conv_layer(
       filters=filters,
       kernel_size=kernel_size,
       strides=strides,
-      activation=activation,
+      # activation=activation,
       padding=padding
     )
