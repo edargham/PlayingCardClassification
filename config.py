@@ -2,7 +2,7 @@ config = {
   'data_path': './data',
   'batch_size': 32,
   'epochs': 200,
-  'learning_rate': 4.5e-4,
+  'learning_rate': 1.5e-4,
   'dropout_rate': 0.0,
   'filters_per_layer': [32, 64, 64, 128],
   'kernel_size_per_layer': [(3, 3), (3, 3), (5, 5), (5, 5)],
