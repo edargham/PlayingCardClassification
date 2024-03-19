@@ -33,8 +33,8 @@ def run_training():
 
   lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
     initial_learning_rate=config['learning_rate'],
-    decay_steps=239,
-    decay_rate=1,
+    decay_steps=239*30,
+    decay_rate=0.85,
     staircase=True
   )
 
