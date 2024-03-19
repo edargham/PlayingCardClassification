@@ -1,5 +1,5 @@
 config = {
-  'data_path': './data',
+  'data_path': '/content',
   'batch_size': 32,
   'epochs': 200,
   'learning_rate': 1.5e-4,
