@@ -1,5 +1,5 @@
 config = {
-  'data_path': '/content',
+  'data_path': 'content',
   'batch_size': 32,
   'epochs': 200,
   'learning_rate': 1.5e-4,
@@ -11,5 +11,6 @@ config = {
   'image_width': 224,
   'image_height': 224,
   'image_channels': 3,
-  'num_layers_in_block': 1
+  'num_layers_in_block': 1,
+  "latent_dim":128
 }
