@@ -46,15 +46,15 @@ class CNNModel(models.Model):
         layers.MaxPool2D(pool_size=(2, 2))
       ]
 
-    # self.lstm_blocks = [
-    #   layers.Dropout(dropout_rate),
-    #   layers.Dense(64, activation="relu", name="dense1"),
-    #   layers.Bidirectional(layers.LSTM(128, return_sequences=True, dropout=0.25)),
-    #   layers.Bidirectional(layers.LSTM(64, return_sequences=False, dropout=0.25))
-    # ]
+    self.lstm_blocks = [
+      layers.Dropout(dropout_rate),
+      layers.Dense(64, activation="relu", name="dense1"),
+      layers.Bidirectional(layers.LSTM(128, return_sequences=True, dropout=0.25)),
+      layers.Bidirectional(layers.LSTM(64, return_sequences=False, dropout=0.25))
+    ]
 
     self.dense_block = [
-      layers.Flatten(),
+      # layers.Flatten(),
       layers.Dropout(dropout_rate),
       layers.Dense(128, activation='relu'),
       layers.Dropout(dropout_rate),
@@ -71,10 +71,10 @@ class CNNModel(models.Model):
     for l in self.conv_blocks:
       x = l(x)
 
-    # x = tf.reshape(x, (-1, tf.shape(x)[3], tf.shape(x)[1]*tf.shape(x)[2]))
+    x = tf.reshape(x, (-1, tf.shape(x)[3], tf.shape(x)[1]*tf.shape(x)[2]))
 
-    # for l in self.lstm_blocks:
-    #   x = l(x)
+    for l in self.lstm_blocks:
+      x = l(x)
 
     for l in self.dense_block:
       x = l(x)
