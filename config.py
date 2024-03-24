@@ -1,6 +1,6 @@
 config = {
   'data_path': 'data',
-  'batch_size': 16,
+  'batch_size': 8,
   'epochs': 200,
   'learning_rate': 1.5e-4,
   'dropout_rate': 0.0,

@@ -5,6 +5,7 @@ from config import config
 from datagen_preprocessing import load_data
 from models.cnn_model import build_model
 
+
 def run_training():
   logdir = 'logs/training/' + datetime.now().strftime("%Y%m%d-%H%M%S")
 

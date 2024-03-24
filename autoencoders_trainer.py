@@ -7,7 +7,7 @@ from datagen_preprocessing_autoencoders import load_data
 from models.autoencoder_model import build_autoencoder  # Import your autoencoder model function
 
 def run_training():
-  logdir = 'logs/training/' + datetime.now().strftime("%Y%m%d-%H%M%S")
+  logdir = 'logs/auto_enc_training/' + datetime.now().strftime("%Y%m%d-%H%M%S")
 
   tensorboard_callback = callbacks.TensorBoard(log_dir=logdir, histogram_freq=1)
 
@@ -20,7 +20,7 @@ def run_training():
   )
   
   model_checkpoint = callbacks.ModelCheckpoint(
-    'best_model',
+    'best_autoencoder',
     monitor='val_loss',
     save_best_only=True,
     save_weights_only=False,
