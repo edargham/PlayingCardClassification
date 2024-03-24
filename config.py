@@ -1,6 +1,6 @@
 config = {
-  'data_path': 'content',
-  'batch_size': 32,
+  'data_path': 'data',
+  'batch_size': 16,
   'epochs': 200,
   'learning_rate': 1.5e-4,
   'dropout_rate': 0.0,

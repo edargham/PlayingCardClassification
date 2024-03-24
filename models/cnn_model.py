@@ -6,17 +6,17 @@ from typing import List
 
 class CNNModel(models.Model):
   def __init__(
-      self,
-      image_width: int,
-      image_height: int,
-      filters_per_layer: List[int],
-      kernel_sizes: List[tuple[int, int]],
-      num_layers_in_block: int,
-      num_classes: int,
-      conv_activation: str='relu',
-      separable: bool = False,
-      dropout_rate: float=0.0,
-      **kwargs
+    self,
+    image_width: int,
+    image_height: int,
+    filters_per_layer: List[int],
+    kernel_sizes: List[tuple[int, int]],
+    num_layers_in_block: int,
+    num_classes: int,
+    conv_activation: str='relu',
+    separable: bool = False,
+    dropout_rate: float=0.0,
+    **kwargs
   ):
     super(CNNModel, self).__init__(**kwargs)
 
@@ -54,7 +54,6 @@ class CNNModel(models.Model):
     ]
 
     self.dense_block = [
-      # layers.Flatten(),
       layers.Dropout(dropout_rate),
       layers.Dense(128, activation='relu'),
       layers.Dropout(dropout_rate),
@@ -82,18 +81,18 @@ class CNNModel(models.Model):
     return x
 
 def build_model(
-    optimizer: optimizers.Optimizer,
-    loss_fn: losses.Loss,
-    model_metrics: List[metrics.Metric],
-    image_width: int,
-    image_height: int,
-    image_channels: int,
-    num_classes: int,
-    filters: List[int],
-    kernel_sizes: List[tuple[int, int]],
-    num_layers_in_block: int,
-    dropout_rate: float,
-    separable: bool=False
+  optimizer: optimizers.Optimizer,
+  loss_fn: losses.Loss,
+  model_metrics: List[metrics.Metric],
+  image_width: int,
+  image_height: int,
+  image_channels: int,
+  num_classes: int,
+  filters: List[int],
+  kernel_sizes: List[tuple[int, int]],
+  num_layers_in_block: int,
+  dropout_rate: float,
+  separable: bool=False
 ):
   model = CNNModel(
     image_width=image_width,
