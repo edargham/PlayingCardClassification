@@ -18,4 +18,6 @@ class KMeansLayer(Layer):
     distances = tf.norm(tf.expand_dims(inputs, axis=1) - self.clusters, axis=2)
     # Assign each input to the closest cluster
     assignments = tf.argmin(distances, axis=1)
-    return tf.gather(self.clusters, assignments)
+    return tf.gather(self.clusters, assignments), assignments
+  
+  
